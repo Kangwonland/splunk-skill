@@ -6,8 +6,8 @@
     "name": "kangwonland",
     "email": ""
   },
-  "homepage": "https://github.com/Kangwonland/splunk-skill",
-  "repository": "https://github.com/Kangwonland/splunk-skill",
+  "homepage": "https://github.com/kangwonland/splunk-skill",
+  "repository": "https://github.com/kangwonland/splunk-skill",
   "license": "MIT",
   "keywords": ["splunk", "spl", "spl2", "search", "observability", "best-practices"]
 }
