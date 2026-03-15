@@ -1,0 +1,13 @@
+{
+  "name": "splunk-spl",
+  "description": "Splunk SPL and SPL2 best practices, patterns, and reference guide for Splunk Enterprise 9.4",
+  "version": "1.0.0",
+  "author": {
+    "name": "kangwonland",
+    "email": ""
+  },
+  "homepage": "https://github.com/Kangwonland/splunk-skill",
+  "repository": "https://github.com/Kangwonland/splunk-skill",
+  "license": "MIT",
+  "keywords": ["splunk", "spl", "spl2", "search", "observability", "best-practices"]
+}

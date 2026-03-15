@@ -1,0 +1,23 @@
+# Build artifacts
+dist/
+*.skill
+
+# Dev tooling
+scripts/
+review/
+*.pyc
+__pycache__/
+.venv/
+node_modules/
+
+# OS
+.DS_Store
+*.swp
+*.swo
+Thumbs.db
+
+# Sensitive
+.env
+*.pem
+*.key
+credentials*
