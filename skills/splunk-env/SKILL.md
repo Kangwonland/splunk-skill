@@ -52,9 +52,15 @@ It ships with example data — the user replaces it with their own environment.
 
 ### When this skill is triggered:
 
-1. **Read** `env-config.md` to understand the current configuration.
-2. **Help the user edit it**: add, modify, or remove entries as requested.
-3. **Write** the updated file back.
+1. **Find** the `env-config.md` file path using Glob (`**/splunk-env/env-config.md`).
+2. **Show the user the full path** so they know where to edit it directly.
+3. **Read** the file to understand the current configuration.
+4. **Help the user edit it**: add, modify, or remove entries as requested.
+5. **Write** the updated file back.
+
+**Always tell the user the file path**, e.g.:
+> "Your Splunk environment config is at: `/path/to/splunk-env/env-config.md`
+> You can edit this file directly anytime, or tell me what to change."
 
 ### File Structure
 
