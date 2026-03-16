@@ -31,6 +31,19 @@ limits.conf values.
 > All documentation references use **help.splunk.com** only.
 > docs.splunk.com is deprecated and no longer maintained.
 
+## Environment-Specific SPL
+
+Before generating any SPL query, check if `skills/splunk-env/env-config.md`
+(or `skills/splunk-env-ko/env-config.md`) exists. If it does, **read it** and
+use the environment data:
+
+- Use actual **index names** from the Indexes table instead of `index=main`
+- Use actual **sourcetype names** instead of generic ones
+- Use **host patterns** (e.g., `host=fw-*`) from Host Groups
+- Apply **lookups** for enrichment when relevant
+- Use **macros** when they simplify the query
+- Follow **SPL Generation Notes** for scenario-to-query mappings
+
 ## Rule Categories by Priority
 
 | Priority | Category | Impact | Prefix | Files |
