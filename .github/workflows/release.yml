@@ -2,7 +2,9 @@ name: Create Release
 
 on:
   push:
-    tags: ['v*-splunk*']
+    tags:
+      - 'v*-splunk*'   # splunk-spl releases
+      - 'env-v*'       # splunk-env releases
 
 permissions:
   contents: write
@@ -17,23 +19,58 @@ jobs:
         id: tag
         run: |
           TAG=${GITHUB_REF#refs/tags/}
-          SKILL_VER=$(echo "$TAG" | sed 's/^v//' | sed 's/-splunk.*//')
-          SPLUNK_VER=$(echo "$TAG" | sed 's/.*-splunk//')
           echo "tag=$TAG" >> $GITHUB_OUTPUT
-          echo "skill_ver=$SKILL_VER" >> $GITHUB_OUTPUT
-          echo "splunk_ver=$SPLUNK_VER" >> $GITHUB_OUTPUT
 
-      - name: Package .skill file
+          if [[ "$TAG" == v*-splunk* ]]; then
+            echo "type=spl" >> $GITHUB_OUTPUT
+            SKILL_VER=$(echo "$TAG" | sed 's/^v//' | sed 's/-splunk.*//')
+            SPLUNK_VER=$(echo "$TAG" | sed 's/.*-splunk//')
+            echo "skill_ver=$SKILL_VER" >> $GITHUB_OUTPUT
+            echo "splunk_ver=$SPLUNK_VER" >> $GITHUB_OUTPUT
+            echo "title=splunk-spl ${SKILL_VER} (Splunk Enterprise ${SPLUNK_VER})" >> $GITHUB_OUTPUT
+          elif [[ "$TAG" == env-v* ]]; then
+            echo "type=env" >> $GITHUB_OUTPUT
+            ENV_VER=$(echo "$TAG" | sed 's/^env-v//')
+            echo "skill_ver=$ENV_VER" >> $GITHUB_OUTPUT
+            echo "title=splunk-env ${ENV_VER}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Package splunk-spl
+        if: steps.tag.outputs.type == 'spl'
         run: |
           cd skills/splunk-spl
           zip -r ../../splunk-spl.skill .
           cd ../..
           echo "Package size: $(wc -c < splunk-spl.skill) bytes"
 
-      - name: Create GitHub Release
+      - name: Package splunk-env
+        if: steps.tag.outputs.type == 'env'
+        run: |
+          cd skills/splunk-env
+          zip -r ../../splunk-env.skill .
+          cd ../..
+          echo "splunk-env size: $(wc -c < splunk-env.skill) bytes"
+
+          cd skills/splunk-env-ko
+          zip -r ../../splunk-env-ko.skill .
+          cd ../..
+          echo "splunk-env-ko size: $(wc -c < splunk-env-ko.skill) bytes"
+
+      - name: Create Release (splunk-spl)
+        if: steps.tag.outputs.type == 'spl'
         run: |
           gh release create "${{ steps.tag.outputs.tag }}" splunk-spl.skill \
-            --title "splunk-spl ${{ steps.tag.outputs.skill_ver }} (Splunk Enterprise ${{ steps.tag.outputs.splunk_ver }})" \
+            --title "${{ steps.tag.outputs.title }}" \
+            --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Create Release (splunk-env)
+        if: steps.tag.outputs.type == 'env'
+        run: |
+          gh release create "${{ steps.tag.outputs.tag }}" \
+            splunk-env.skill splunk-env-ko.skill \
+            --title "${{ steps.tag.outputs.title }}" \
             --generate-notes
         env:
           GH_TOKEN: ${{ github.token }}
