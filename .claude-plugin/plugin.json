@@ -2,6 +2,7 @@
   "name": "splunk-spl",
   "description": "Splunk SPL and SPL2 best practices, patterns, and reference guide for Splunk Enterprise 9.4",
   "version": "1.0.0",
+  "skills": "./skills/",
   "author": {
     "name": "kangwonland",
     "email": ""

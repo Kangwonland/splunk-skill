@@ -10,6 +10,8 @@ description: >
   DO NOT TRIGGER when: user asks about other log/search platforms
   (Elasticsearch, OpenSearch, Datadog, Sumo Logic, Sentinel/KQL,
   Logstash, Grafana) even if the concepts overlap.
+  DO NOT TRIGGER when: user wants to configure/save their Splunk
+  environment metadata or import conf files (handled by splunk-env).
   Provides Splunk Enterprise 9.4 best practices — 86 rules covering
   all SPL/SPL2 commands, performance patterns, and migration guides.
 license: MIT
